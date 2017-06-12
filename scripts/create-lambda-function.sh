@@ -7,7 +7,7 @@ ENVIRONMENT=${1:-$DEFAULT_ENVIRONMENT}
 ROLE_ARN=${2:-$DEFAULT_ROLE_ARN}
 
 ARCHIVE_FILE_NAME=lambda-streams-to-firehose.zip
-LAMBDA_FUNCTION_NAME=platform-lambda-streams-to-firehose
+LAMBDA_FUNCTION_NAME=platform-lambda-streams-to-firehose-1
 S3_BUCKET=com.climate.${ENVIRONMENT}.services.versioned
 S3_KEY=platform-ddb-backup
 
@@ -53,7 +53,7 @@ aws lambda create-function \
     --function-name ${LAMBDA_FUNCTION_NAME} \
     --runtime nodejs4.3 \
     --role ${ROLE_ARN} \
-    --handler custom-index.handler \
+    --handler index.handler \
     --code S3Bucket=${S3_BUCKET},S3Key=${S3_KEY}/${ARCHIVE_FILE_NAME}\
     --description "An AWS Lambda function that forwards data from a Kinesis or DynamoDB Update Stream to a Kinesis Firehose Delivery Stream" \
     --timeout 10 \
