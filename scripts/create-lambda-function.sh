@@ -7,7 +7,7 @@ ENVIRONMENT=${1:-$DEFAULT_ENVIRONMENT}
 ROLE_ARN=${2:-$DEFAULT_ROLE_ARN}
 
 ARCHIVE_FILE_NAME=lambda-streams-to-firehose.zip
-LAMBDA_FUNCTION_NAME=platform-lambda-streams-to-firehose-1
+LAMBDA_FUNCTION_NAME=platform-lambda-ddb-streams-to-firehose
 S3_BUCKET=com.climate.${ENVIRONMENT}.services.versioned
 S3_KEY=platform-ddb-backup
 
