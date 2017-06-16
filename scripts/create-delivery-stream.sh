@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash -e
 
 DEFAULT_ENVIRONMENT=qa1
 DEFAULT_ROLE_ARN=arn:aws:iam::345062758380:role/platform-firehose-delivery-role

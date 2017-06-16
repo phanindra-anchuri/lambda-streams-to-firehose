@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -x
+#!/bin/bash -e
 
 DEFAULT_ENVIRONMENT=qa1
 ENVIRONMENT=${1:-$DEFAULT_ENVIRONMENT}
