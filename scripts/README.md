@@ -9,7 +9,8 @@ The lambda function is deployed to qa1 by default.
 ./create-event-source-mapping.sh
 
 This script creates the mapping between the event source (the dynamodb update streams in this case)
-and this lambda function so that the function gets invoked when there source table has updates.
+and this lambda function so that the function gets invoked when there source table has updates,
+the script also enables the dynamodb update streams on the table in question in case they aren't already enabled.
 
 # Creating the firehose delivery stream
 ./create-delivery-stream.sh
