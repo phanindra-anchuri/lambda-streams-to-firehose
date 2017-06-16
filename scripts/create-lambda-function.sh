@@ -45,6 +45,7 @@ zip -x \*node_modules/protobufjs/tests/\* -r target/${ARCHIVE_FILE_NAME} \
  ../LICENSE NOTICE.txt \
  target/${ARCHIVE_FILE_NAME}
 
+eval `envmgr -e ${ENVIRONMENT}`
 echo "uploading archive to s3"
 aws s3 cp target/${ARCHIVE_FILE_NAME} s3://${S3_BUCKET}/${S3_KEY}/${ARCHIVE_FILE_NAME}
 
