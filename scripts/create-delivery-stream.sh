@@ -17,7 +17,6 @@ echo "   role arn               [${ROLE_ARN}]"
 
 echo "Creating Cloudwatch log group "
 
-
 $(aws logs create-log-group --log-group-name ${LOG_GROUP})
 
 echo -n "Creating Kinesis Firehose Delivery Stream "

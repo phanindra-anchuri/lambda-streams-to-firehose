@@ -1,11 +1,8 @@
 #!/bin/bash -e
 
 DEFAULT_ENVIRONMENT=qa1
-DEFAULT_ROLE_ARN=arn:aws:iam::345062758380:role/platform-ddb-backup-lambda-role
 
 ENVIRONMENT=${1:-$DEFAULT_ENVIRONMENT}
-ROLE_ARN=${2:-$DEFAULT_ROLE_ARN}
-
 ARCHIVE_FILE_NAME=lambda-streams-to-firehose.zip
 LAMBDA_FUNCTION_NAME=platform-lambda-ddb-streams-to-firehose
 S3_BUCKET=com.climate.${ENVIRONMENT}.services.versioned
@@ -22,11 +19,15 @@ function is-default() {
     return 0
 }
 
-echo "usage ./scripts/create-lambda-function.sh [environment] [role-arn]"
+eval `envmgr -e ${ENVIRONMENT}`
+
+echo "usage ./scripts/create-lambda-function.sh [environment]"
 echo ""
 echo "creating lambda function [${LAMBDA_FUNCTION_NAME}]"
 echo "   environment            [${ENVIRONMENT}] $(is-default ${1} ${DEFAULT_ENVIRONMENT})"
-echo "   role arn               [${ROLE_ARN}] $(is-default ${2} ${DEFAULT_ROLE_ARN})"
+
+ROLE_ARN=$(aws iam list-roles | jq '.Roles[] | select(.RoleName=="platform-ddb-backup-lambda-role") | .Arn' | tr -d '"')
+echo "   role arn               [${ROLE_ARN}])"
 
 mkdir -p target
 
@@ -45,7 +46,6 @@ zip -x \*node_modules/protobufjs/tests/\* -r target/${ARCHIVE_FILE_NAME} \
  ../LICENSE NOTICE.txt \
  target/${ARCHIVE_FILE_NAME}
 
-eval `envmgr -e ${ENVIRONMENT}`
 echo "uploading archive to s3"
 aws s3 cp target/${ARCHIVE_FILE_NAME} s3://${S3_BUCKET}/${S3_KEY}/${ARCHIVE_FILE_NAME}
 
